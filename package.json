@@ -1,7 +1,8 @@
 {
-  "name": "superheros",
+  "name": "backend",
   "version": "0.0.0",
   "private": true,
+  "main": "index.js",
   "scripts": {
     "test": "npx jest",
     "start": "cross-env NODE_ENV=production node ./server.js",
@@ -9,6 +10,11 @@
     "lint": "eslint **/*.js",
     "lint:fix": "eslint --fix **/*.js"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SerhiiOnyshchenko/backend.git"
+  },
+  "homepage": "https://github.com/SerhiiOnyshchenko/backend#readme",
   "dependencies": {
     "cors": "2.8.5",
     "cross-env": "7.0.3",
