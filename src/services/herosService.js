@@ -1,6 +1,6 @@
 const Hero = require('../db/heroModel');
 const { WrongPramError } = require('../helpers/errors');
-const { s3Uploadv2 } = require('./s3service');
+const { s3Uploadv2, s3Deletev2 } = require('./s3service');
 
 const getHeros = async ({ skip, limit }) => {
   const heros = await Hero.find({}).skip(skip).limit(limit);
@@ -38,9 +38,16 @@ const patchHeroById = async (id, body, file) => {
   const { nickname, realName, originDescription, superpowers, catchPhrase } =
     body;
   let image = null;
+  const heroOld = await Hero.findOne({ _id: id });
   if (file) {
+    // upload new file to aws
     const result = await s3Uploadv2(file);
     image = result.Location;
+
+    // delete old file from aws
+    await s3Deletev2(heroOld.image);
+  } else {
+    image = heroOld.image;
   }
 
   try {
@@ -64,11 +71,14 @@ const patchHeroById = async (id, body, file) => {
 
 const deleteHeroById = async id => {
   try {
-    await Hero.findOneAndDelete({ id });
+    const hero = await Hero.findOne({ _id: id });
+    await s3Deletev2(hero.image);
+    await Hero.findOneAndDelete({ _id: id });
   } catch (error) {
     throw new WrongPramError('Not found');
   }
 };
+
 module.exports = {
   getHeros,
   getHeroById,

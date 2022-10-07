@@ -20,10 +20,11 @@ exports.s3Uploadv2 = async file => {
   return await s3.upload(params).promise();
 };
 
-exports.s3Deletev2 = async file => {
+exports.s3Deletev2 = async urlFile => {
+  const name = urlFile.split('/');
   const params = {
     Bucket: AWS_BUCKET_NAME,
-    Key: `upload/${file.Key}`,
+    Key: `upload/${name[4]}`,
   };
   return await s3.deleteObject(params).promise();
 };
