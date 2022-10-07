@@ -1,35 +1,31 @@
 {
   "swagger": "2.0",
   "info": {
-    "description": "This is an online wallet server. Below you can find a detailed documentation regarding all possible requests that our online wallet server can handle. Have fun!  <br /> <br /> <i>P.S. In order to see what fields are required in the request body and their types - click on the <i><strong>Model</strong></i> button next to the <i><strong>Example Value</strong></i>.</i>",
+    "description": "This is an online super heros server. Below you can find a detailed documentation regarding all possible requests that our online super heros server can handle. Have fun!  <br /> <br /> <i>P.S. In order to see what fields are required in the request body and their types - click on the <i><strong>Model</strong></i> button next to the <i><strong>Example Value</strong></i>.</i>",
     "version": "1.0.0",
-    "title": "eWallet"
+    "title": "back-end super-heros"
   },
-  "host": "wallet-api-back-end.herokuapp.com",
+  "host": "backend-superheros.herokuapp.com",
   "basePath": "/api",
   "schemes": ["https"],
   "tags": [
     {
-      "name": "users",
-      "description": "Operations about user"
-    },
-    {
-      "name": "wallet",
-      "description": "Access to eWallet and money operations"
+      "name": "Heros",
+      "description": "Operations about hero"
     }
   ],
   "paths": {
-    "/users": {
+    "/heros": {
       "get": {
-        "tags": ["users"],
-        "summary": "Get list of users",
-        "operationId": "getUserInfo",
+        "tags": ["heros"],
+        "summary": "Get list of heros",
+        "operationId": "getHeros",
         "produces": ["application/json"],
         "responses": {
           "200": {
-            "description": "Operation successful user info",
+            "description": "Operation successful heros list",
             "schema": {
-              "$ref": "#/definitions/usersInfoSuccess"
+              "$ref": "#/definitions/herosInfoSuccess"
             }
           },
           "400": {
@@ -41,26 +37,26 @@
         }
       },
       "post": {
-        "tags": ["users"],
-        "summary": "Registers new user.",
-        "description": "This creates a new user.",
-        "operationId": "createUser",
+        "tags": ["heros"],
+        "summary": "Registers new hero.",
+        "description": "This creates a new hero.",
+        "operationId": "createHero",
         "produces": ["application/json"],
         "parameters": [
           {
-            "name": "body",
+            "name": "formdata",
             "required": true,
             "in": "body",
             "schema": {
-              "$ref": "#/definitions/User"
+              "$ref": "#/definitions/HeroPost"
             }
           }
         ],
         "responses": {
           "201": {
-            "description": "Operation successful. Email sent",
+            "description": "Operation successful. hero info",
             "schema": {
-              "$ref": "#/definitions/registerSuccess"
+              "$ref": "#/definitions/herosResponse"
             }
           },
           "400": {
@@ -72,153 +68,71 @@
         }
       }
     },
-    "/wallet": {
+    "/heros/:heroId": {
       "get": {
-        "tags": ["wallet"],
-        "summary": "Request user balans",
-        "description": "This returns user balans.",
-        "operationId": "getBalans",
+        "tags": ["heros"],
+        "summary": "Get info about hero",
+        "operationId": "getHeroInfo",
         "produces": ["application/json"],
-        "parameters": [
-          {
-            "name": "body",
-            "required": true,
-            "in": "body",
-            "schema": {
-              "$ref": "#/definitions/Balans"
-            }
-          },
-          {
-            "in": "query",
-            "name": "currency",
-            "type": "string",
-            "description": "The three-letter currency code of the currency you would like to convert to."
-          }
-        ],
         "responses": {
           "200": {
-            "description": "successful operation",
+            "description": "Operation successful hero info",
             "schema": {
-              "$ref": "#/definitions/balansSuccess"
+              "$ref": "#/definitions/herosResponse"
             }
           },
           "400": {
-            "description": "bad request",
-            "schema": {
-              "$ref": "#/definitions/badRequest"
-            }
-          }
-        }
-      }
-    },
-    "/wallet/transaction": {
-      "get": {
-        "tags": ["wallet"],
-        "summary": "Request all users transactions statistics.",
-        "description": "This returns all transactions statistics for a given user.",
-        "operationId": "getTransactionsStats",
-        "produces": ["application/json"],
-        "parameters": [
-          {
-            "name": "body",
-            "required": true,
-            "in": "body",
-            "schema": {
-              "$ref": "#/definitions/transactionInfo"
-            }
-          },
-          {
-            "in": "query",
-            "name": "page",
-            "type": "number",
-            "description": "The page's number."
-          },
-          {
-            "in": "query",
-            "name": "limit",
-            "type": "number",
-            "description": "The limit transaction, gefault 20."
-          },
-          {
-            "in": "query",
-            "name": "sort",
-            "type": "string",
-            "description": "The sort by sum(Asc) or sum-(Desc) and date(Asc) or date-(Desc), default date-."
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "successful operation",
-            "schema": {
-              "$ref": "#/definitions/transactionsSuccess"
-            }
-          },
-          "400": {
-            "description": "bad request",
+            "description": "Invalid credentials supplied",
             "schema": {
               "$ref": "#/definitions/badRequest"
             }
           }
         }
       },
-      "post": {
-        "tags": ["wallet"],
-        "summary": "Creates a transaction.",
-        "description": "This creates a transaction.",
-        "operationId": "createTransaction",
+      "delete": {
+        "tags": ["heros"],
+        "summary": "Delete hero by id.",
+        "operationId": "deleteHero",
         "produces": ["application/json"],
-        "parameters": [
-          {
-            "name": "body",
-            "required": true,
-            "in": "body",
-            "schema": {
-              "$ref": "#/definitions/Transaction"
-            }
-          }
-        ],
         "responses": {
-          "201": {
-            "description": "successful operation",
+          "200": {
+            "description": "hero deleted",
             "schema": {
-              "$ref": "#/definitions/transactionSuccess"
+              "$ref": "#/definitions/deleteSuccess"
             }
           },
           "400": {
-            "description": "bad request",
+            "description": "Invalid credentials supplied",
             "schema": {
               "$ref": "#/definitions/badRequest"
             }
           }
         }
-      }
-    },
-    "/wallet/transfer": {
-      "post": {
-        "tags": ["wallet"],
-        "summary": "Creates s transfer.",
-        "description": "This returns transaction about transfer.",
-        "operationId": "createTransferCategories",
+      },
+      "patch": {
+        "tags": ["heros"],
+        "summary": "Update hero by id.",
+        "description": "This update a hero.",
+        "operationId": "updateHero",
         "produces": ["application/json"],
         "parameters": [
           {
-            "name": "body",
-            "required": true,
+            "name": "Form Data",
             "in": "body",
             "schema": {
-              "$ref": "#/definitions/Transfer"
+              "$ref": "#/definitions/HeroPost"
             }
           }
         ],
         "responses": {
-          "201": {
-            "description": "successful operation",
+          "200": {
+            "description": "Operation successful.",
             "schema": {
-              "$ref": "#/definitions/transferSuccess"
+              "$ref": "#/definitions/herosResponse"
             }
           },
           "400": {
-            "description": "bad request",
+            "description": "Invalid credentials supplied",
             "schema": {
               "$ref": "#/definitions/badRequest"
             }
@@ -228,63 +142,42 @@
     }
   },
   "definitions": {
-    "User": {
+    "HeroPost": {
       "type": "object",
       "properties": {
-        "firstName": {
+        "image": {
           "type": "string",
-          "example": "Avisalom"
+          "example": "File"
         },
-        "lastName": {
+        "nickname": {
           "type": "string",
-          "example": "Peremychniy"
-        }
-      },
-      "required": ["firstName", "lastName"]
-    },
-    "Balans": {
-      "type": "object",
-      "properties": {
-        "userId": {
-          "type": "string",
-          "example": "62fdf7483dbc09f0ce097a2f"
-        }
-      },
-      "required": ["userId"]
-    },
-    "transactionInfo": {
-      "type": "object",
-      "properties": {
-        "owner": {
-          "type": "string",
-          "example": "62fdf7483dbc09f0ce097a2f"
-        }
-      },
-      "required": ["owner"]
-    },
-    "registerSuccess": {
-      "type": "object",
-      "properties": {
-        "user": {
-          "type": "object",
-          "properties": {
-            "firstName": {
-              "type": "string",
-              "example": "Avisalom"
-            },
-            "lastName": {
-              "type": "string",
-              "example": "Peremychniy"
-            },
-            "_id": {
-              "type": "string",
-              "example": "62fe2e8c7496268b6a9d727b"
-            }
-          }
+          "example": "string"
         },
-        "status": {
+        "realName": {
           "type": "string",
-          "example": "success"
+          "example": "string"
+        },
+        "originDescription": {
+          "type": "string",
+          "example": "string"
+        },
+        "superpowers": {
+          "type": "string",
+          "example": "string"
+        },
+        "catchPhrase": {
+          "type": "string",
+          "example": "string"
+        }
+      },
+      "required": ["nickname", "realName"]
+    },
+    "deleteSuccess": {
+      "type": "object",
+      "properties": {
+        "message": {
+          "type": "string",
+          "example": "hero deleted"
         }
       }
     },
@@ -296,101 +189,32 @@
         }
       }
     },
-    "transactionSuccess": {
+    "herosInfoSuccess": {
       "type": "object",
       "properties": {
-        "transaction": {
-          "$ref": "#/definitions/transactionResponse"
-        },
-        "status": {
-          "type": "string",
-          "example": "success"
-        }
-      }
-    },
-    "transferSuccess": {
-      "type": "object",
-      "properties": {
-        "transfer": {
-          "type": "object",
-          "properties": {
-            "sum": {
-              "type": "number",
-              "example": 2500
-            },
-            "owner": {
-              "type": "string",
-              "example": "62fd42fcb66e8b5cd05fc77c"
-            },
-            "recipient": {
-              "type": "string",
-              "example": "62fd42fcb66e8b5cd05fc77c"
-            },
-            "description": {
-              "type": "string",
-              "example": "groceries"
-            },
-            "category": {
-              "type": "string",
-              "example": "other"
-            },
-            "_id": {
-              "type": "string",
-              "example": "62fe4388b3ad9c18f43f4786"
-            },
-            "createdAt": {
-              "type": "string",
-              "example": "2022-05-16T10:34:53.652Z"
-            },
-            "updatedAt": {
-              "type": "string",
-              "example": "2022-05-16T10:34:53.652Z"
-            }
-          }
-        },
-        "status": {
-          "type": "string",
-          "example": "success"
-        }
-      }
-    },
-    "balansSuccess": {
-      "type": "object",
-      "properties": {
-        "balans": {
-          "type": "number",
-          "example": "2000"
-        },
-        "currency": {
-          "type": "string",
-          "example": "USD"
-        },
-        "status": {
-          "type": "string",
-          "example": "success"
-        }
-      }
-    },
-    "transactionsSuccess": {
-      "type": "object",
-      "properties": {
-        "transactions": {
+        "heros": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/transactionResponse"
+            "$ref": "#/definitions/herosResponse"
           },
           "example": [
             {
-              "sum": 2598,
-              "description": "Долг",
-              "category": "Переказ коштів",
-              "createdAt": "2022-08-18T08:14:43.308Z"
+              "_id": "62fe2e8c7496268b6a9d727b",
+              "nickname": "Superman",
+              "realName": "Clark Kent",
+              "originDescription": "he was born Kal-El on the planet Krypton…",
+              "superpowers": "solar energy absorption and…",
+              "catchPhrase": "“Look, up in the sky, it's a bird, it's a plane, it's Superman!”",
+              "image": "https://serhiibackend.s3.eu-central-1.amazonaws.com/upload/bc3e4e27-9c54-47aa-b78b-b82d08fcd8f9-644-superman.jpg"
             },
             {
-              "sum": 1649,
-              "description": "Аванс",
-              "category": "Поповнення",
-              "createdAt": "2022-08-18T08:14:23.308Z"
+              "_id": "62fe2e8c7496268b6a9d727b",
+              "nickname": "Superman",
+              "realName": "Clark Kent",
+              "originDescription": "he was born Kal-El on the planet Krypton…",
+              "superpowers": "solar energy absorption and…",
+              "catchPhrase": "“Look, up in the sky, it's a bird, it's a plane, it's Superman!”",
+              "image": "https://serhiibackend.s3.eu-central-1.amazonaws.com/upload/bc3e4e27-9c54-47aa-b78b-b82d08fcd8f9-644-superman.jpg"
             }
           ]
         },
@@ -398,132 +222,55 @@
           "type": "number",
           "example": 1
         },
+        "total": {
+          "type": "number",
+          "example": 2
+        },
         "status": {
           "type": "string",
           "example": "success"
         }
       }
     },
-    "transactionResponse": {
+    "herosResponse": {
       "type": "object",
       "properties": {
-        "typeTransaction": {
-          "type": "boolean"
-        },
-        "sum": {
-          "type": "number",
-          "example": 2598
-        },
-        "owner": {
-          "type": "string",
-          "example": "62fd42fcb66e8b5cd05fc77c"
-        },
-        "description": {
-          "type": "string",
-          "example": "groceries"
-        },
-        "category": {
-          "type": "string",
-          "example": "other"
-        },
-        "_id": {
-          "type": "string",
-          "example": "62fe4388b3ad9c18f43f4786"
-        },
-        "createdAt": {
-          "type": "string",
-          "example": "2022-05-16T10:34:53.652Z"
-        },
-        "updatedAt": {
-          "type": "string",
-          "example": "2022-05-16T10:34:53.652Z"
-        }
-      }
-    },
-    "usersInfoSuccess": {
-      "type": "object",
-      "properties": {
-        "users": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/usersResponse"
-          },
-          "example": [
-            {
-              "_id": "62fe2e8c7496268b6a9d727b",
-              "firstName": "Avisalom",
-              "lastName": "Peremychniy"
+        "hero": {
+          "type": "object",
+          "properties": {
+            "_id": {
+              "type": "string",
+              "example": "62fe2e8c7496268b6a9d727b"
             },
-            {
-              "_id": "62fe2e8c7496268b6a9d727b",
-              "firstName": "Avisalom",
-              "lastName": "Peremychniy"
+            "nickname": {
+              "type": "string",
+              "example": "Superman"
+            },
+            "realName": {
+              "type": "string",
+              "example": "Clark Kent"
+            },
+            "originDescription": {
+              "type": "string",
+              "example": "he was born Kal-El on the planet Krypton, before being rocketed to\\r\\nEarth as an infant by his scientist father Jor-El, moments before Krypton's destruction…"
+            },
+            "superpowers": {
+              "type": "string",
+              "example": "solar energy absorption and healing factor, solar flare and heat vision,\\r\\nsolar invulnerability, flight…"
+            },
+            "catchPhrase": {
+              "type": "string",
+              "example": "“Look, up in the sky, it's a bird, it's a plane, it's Superman!”"
+            },
+            "image": {
+              "type": "string",
+              "example": "https://serhiibackend.s3.eu-central-1.amazonaws.com/upload/bc3e4e27-9c54-47aa-b78b-b82d08fcd8f9-644-superman.jpg"
             }
-          ]
+          }
         },
         "status": {
           "type": "string",
           "example": "success"
-        }
-      }
-    },
-    "usersResponse": {
-      "type": "object",
-      "properties": {
-        "_id": {
-          "type": "string",
-          "example": "62fe2e8c7496268b6a9d727b"
-        },
-        "firstName": {
-          "type": "string",
-          "example": "Avisalom"
-        },
-        "lastName": {
-          "type": "string",
-          "example": "Peremychniy"
-        }
-      }
-    },
-    "Transaction": {
-      "type": "object",
-      "properties": {
-        "typeTransaction": {
-          "type": "boolean"
-        },
-        "sum": {
-          "type": "number"
-        },
-        "category": {
-          "type": "string"
-        },
-        "description": {
-          "type": "string"
-        }
-      },
-      "required": ["typeTransaction", "sum"]
-    },
-    "Transfer": {
-      "type": "object",
-      "properties": {
-        "sum": {
-          "type": "number",
-          "example": 1000
-        },
-        "owner": {
-          "type": "string",
-          "example": "62fdf7483dbc09f0ce097a2f"
-        },
-        "recipient": {
-          "type": "string",
-          "example": "62fdf7483dbc09f0ce097a2f"
-        },
-        "category": {
-          "type": "string",
-          "example": "Переказ коштів"
-        },
-        "description": {
-          "type": "string",
-          "example": "Долг"
         }
       },
       "required": ["owner", "recipient", "sum"]
