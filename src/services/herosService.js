@@ -3,9 +3,13 @@ const { WrongPramError } = require('../helpers/errors');
 const { s3Uploadv2, s3Deletev2 } = require('./s3service');
 
 const getHeros = async ({ skip, limit }) => {
-  const heros = await Hero.find({}).skip(skip).limit(limit);
-  const total = await Hero.find({}).count();
-  return { heros, total };
+  try {
+    const heros = await Hero.find({}).skip(skip).limit(limit);
+    const total = await Hero.find({}).count();
+    return { heros, total };
+  } catch (error) {
+    throw new WrongPramError('Not found');
+  }
 };
 
 const getHeroById = async id => {

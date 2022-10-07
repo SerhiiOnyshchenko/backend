@@ -16,4 +16,4 @@ MONGO_URL=mongodb+srv://<<username>>:<<password>>@cluster0.ygcc5.mongodb.net/tes
 адресою (https://localhost:8080/api/docs/).
 
 Або можна просто скористатися Back-End from heroku
-[документацію по запитах](https://wallet-api-back-end.herokuapp.com/api/docs/).
+[документацію по запитах](https://https://backend-superheros.herokuapp.com/api/docs/).
