@@ -1,8 +1,6 @@
 const Hero = require('../db/heroModel');
-const path = require('path');
-const Jimp = require('jimp');
-const { WrongPramError, NoAuthorizedError } = require('../helpers/errors');
-const { uploadDir, downloadDir } = require('../middlewares/uploadMiddleware');
+const { WrongPramError } = require('../helpers/errors');
+const { s3Uploadv2 } = require('./s3service');
 
 const getHeros = async ({ skip, limit }) => {
   const heros = await Hero.find({}).skip(skip).limit(limit);
@@ -22,16 +20,8 @@ const getHeroById = async id => {
 const addHero = async (body, file) => {
   const { nickname, realName, originDescription, superpowers, catchPhrase } =
     body;
-
-  Jimp.read(`${uploadDir}/${file.filename}`, (err, image) => {
-    if (err) {
-      throw new NoAuthorizedError('Not authorized');
-    }
-    image
-      .resize(320, 480) // resize
-      .write(`${downloadDir}/${file.filename}`); // save
-  });
-  const image = path.resolve(`${downloadDir}/${file.filename}`);
+  const result = await s3Uploadv2(file);
+  const image = result.Location;
 
   const hero = await Hero.create({
     nickname,
@@ -49,15 +39,8 @@ const patchHeroById = async (id, body, file) => {
     body;
   let image = null;
   if (file) {
-    Jimp.read(`${uploadDir}/${file.filename}`, (err, image) => {
-      if (err) {
-        throw new NoAuthorizedError('Not authorized');
-      }
-      image
-        .resize(320, 480) // resize
-        .write(`${downloadDir}/${file.filename}`); // save
-    });
-    image = path.resolve(`${downloadDir}/${file.filename}`);
+    const result = await s3Uploadv2(file);
+    image = result.Location;
   }
 
   try {
