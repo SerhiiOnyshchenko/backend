@@ -7,7 +7,9 @@
   },
   "host": "backend-superheros.herokuapp.com",
   "basePath": "/api",
-  "schemes": ["https"],
+  "schemes": [
+    "https"
+  ],
   "tags": [
     {
       "name": "Heros",
@@ -17,10 +19,14 @@
   "paths": {
     "/heros": {
       "get": {
-        "tags": ["heros"],
+        "tags": [
+          "heros"
+        ],
         "summary": "Get list of heros",
         "operationId": "getHeros",
-        "produces": ["application/json"],
+        "produces": [
+          "application/json"
+        ],
         "responses": {
           "200": {
             "description": "Operation successful heros list",
@@ -37,19 +43,60 @@
         }
       },
       "post": {
-        "tags": ["heros"],
-        "summary": "Registers new hero.",
+        "tags": [
+          "heros"
+        ],
+        "summary": "Create new hero.",
         "description": "This creates a new hero.",
         "operationId": "createHero",
-        "produces": ["application/json"],
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "produces": [
+          "application/json"
+        ],
         "parameters": [
           {
-            "name": "formdata",
+            "name": "image",
+            "in": "formData",
+            "description": "file to upload",
             "required": true,
-            "in": "body",
-            "schema": {
-              "$ref": "#/definitions/HeroPost"
-            }
+            "type": "file"
+          },
+          {
+            "name": "nickname",
+            "in": "formData",
+            "description": "nickname data to pass to server",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "realName",
+            "in": "formData",
+            "description": "realName data to pass to server",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "originDescription",
+            "in": "formData",
+            "description": "originDescription data to pass to server",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "superpowers",
+            "in": "formData",
+            "description": "superpowers data to pass to server",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "catchPhrase",
+            "in": "formData",
+            "description": "catchPhrase data to pass to server",
+            "required": true,
+            "type": "string"
           }
         ],
         "responses": {
@@ -70,10 +117,14 @@
     },
     "/heros/:heroId": {
       "get": {
-        "tags": ["heros"],
+        "tags": [
+          "heros"
+        ],
         "summary": "Get info about hero",
         "operationId": "getHeroInfo",
-        "produces": ["application/json"],
+        "produces": [
+          "application/json"
+        ],
         "responses": {
           "200": {
             "description": "Operation successful hero info",
@@ -90,10 +141,14 @@
         }
       },
       "delete": {
-        "tags": ["heros"],
+        "tags": [
+          "heros"
+        ],
         "summary": "Delete hero by id.",
         "operationId": "deleteHero",
-        "produces": ["application/json"],
+        "produces": [
+          "application/json"
+        ],
         "responses": {
           "200": {
             "description": "hero deleted",
@@ -110,18 +165,60 @@
         }
       },
       "patch": {
-        "tags": ["heros"],
+        "tags": [
+          "heros"
+        ],
         "summary": "Update hero by id.",
         "description": "This update a hero.",
         "operationId": "updateHero",
-        "produces": ["application/json"],
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "produces": [
+          "application/json"
+        ],
         "parameters": [
           {
-            "name": "Form Data",
-            "in": "body",
-            "schema": {
-              "$ref": "#/definitions/HeroPost"
-            }
+            "name": "image",
+            "in": "formData",
+            "description": "file to upload",
+            "required": false,
+            "type": "file"
+          },
+          {
+            "name": "nickname",
+            "in": "formData",
+            "description": "nickname data to pass to server",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "realName",
+            "in": "formData",
+            "description": "realName data to pass to server",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "originDescription",
+            "in": "formData",
+            "description": "originDescription data to pass to server",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "superpowers",
+            "in": "formData",
+            "description": "superpowers data to pass to server",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "catchPhrase",
+            "in": "formData",
+            "description": "catchPhrase data to pass to server",
+            "required": true,
+            "type": "string"
           }
         ],
         "responses": {
@@ -170,7 +267,10 @@
           "example": "string"
         }
       },
-      "required": ["nickname", "realName"]
+      "required": [
+        "nickname",
+        "realName"
+      ]
     },
     "deleteSuccess": {
       "type": "object",
@@ -273,7 +373,11 @@
           "example": "success"
         }
       },
-      "required": ["owner", "recipient", "sum"]
+      "required": [
+        "owner",
+        "recipient",
+        "sum"
+      ]
     }
   }
 }

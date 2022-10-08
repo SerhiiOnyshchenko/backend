@@ -12,8 +12,15 @@
 MONGO_URL=mongodb+srv://<<username>>:<<password>>@cluster0.ygcc5.mongodb.net/test?retryWrites=true&w=majority
 щоб підключитися до MongoDB.
 
+- AWS_ACCESS_KEY_ID
+- AWS_SECRET_ACCESS_KEY
+- AWS_REGION
+- AWS_BUCKET_NAME
+
+щоб підключитися до AWS S3 (база даних для фото).
+
 Після запуску сервера переглядаємо документацію по запитах можна переглянути за
-адресою (https://localhost:8080/api/docs/).
+адресою (https://localhost:<<PORT>>/api/docs/).
 
 Або можна просто скористатися Back-End from heroku
-[документацію по запитах](https://https://backend-superheros.herokuapp.com/api/docs/).
+[документацію по запитах](https://backend-superheros.herokuapp.com/api/docs/).
